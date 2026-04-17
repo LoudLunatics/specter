@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='spectre-loc',
-    version='1.1.0', # Kita naikkan ke 1.0.4 agar Pacman tahu ada update
+    version='1.1.1', # Kita naikkan ke 1.0.4 agar Pacman tahu ada update
     packages=['spectre'], # 🚨 CARA EKSPLISIT: Paksa Python membungkus folder 'spectre'
     install_requires=[
         'shodan==1.31.0',
