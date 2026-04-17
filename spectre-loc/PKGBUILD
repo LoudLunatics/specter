@@ -5,7 +5,7 @@ pkgrel=1
 pkgdesc="Geolocation Surveillance & Recon Engine based on Shodan"
 arch=('any')
 license=('MIT')
-depends=('python' 'python-dotenv' 'python-rich' 'python-shodan')
+depends=('python' 'python-dotenv' 'python-rich' 'nmap')
 
 # Using the latest Arch Linux standard (PEP 517)
 makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
