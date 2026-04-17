@@ -15,14 +15,13 @@ source=()
 sha256sums=()
 
 build() {
-  # Enter the directory where this PKGBUILD is located
-  cd "$startdir"
-  # Create the .whl (Wheel) file
+  # Masuk satu level lebih dalam ke sub-folder spectre-loc
+  cd "$pkgname-$pkgver/$pkgname"
   python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "$startdir"
-  # Install the .whl file to the Pacman system
+  # Masuk satu level lebih dalam ke sub-folder spectre-loc
+  cd "$pkgname-$pkgver/$pkgname"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }
