@@ -1,20 +1,20 @@
 from specter.ui import console, show_welcome, show_status, show_success, show_error
-from specter.engine import SpectreEngine
+from specter.engine import SpecterEngine
 from rich.table import Table
 
 def main():
     show_welcome()
     
-    # Input target sekarang berupa IP atau Range (Ubah SPECTRE jadi SPECTER)
+    # Input target sekarang berupa IP atau Range
     target = console.input("[bold red]SPECTER[/bold red]@[bold white]target_ip/range[/bold white]: ")
     
-    # Fitur baru: Pilih Mode (Ubah SPECTRE jadi SPECTER)
+    # Fitur baru: Pilih Mode
     mode = console.input("[bold red]SPECTER[/bold red]@[bold white]stealth_mode(y/n)[/bold white]: ").lower()
     is_stealth = True if mode == 'y' else False
 
     show_status(f"Scanning target {target} in {'GHOST' if is_stealth else 'NORMAL'} mode...")
 
-    engine = SpectreEngine()
+    engine = SpecterEngine()
     
     # Proses Scan
     with console.status("[bold yellow]Infiltrating network...[/bold yellow]"):
@@ -39,5 +39,5 @@ def main():
     else:
         show_error(f"Engine Failure: {results}")
 
-if __name__ == "__main__":
+if name == "main":
     main()
