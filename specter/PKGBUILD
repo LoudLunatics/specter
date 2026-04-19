@@ -11,20 +11,18 @@ depends=('python' 'python-dotenv' 'python-rich' 'nmap')
 # Menggunakan standar Arch Linux terbaru (PEP 517)
 makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
 
-# INI KUNCI UTAMANYA: Mengunduh langsung dari rilis GitHub v1.2.5
-source=("$pkgname-$pkgver.tar.gz::https://github.com/LoudLunatics/specter/archive/refs/tags/v$pkgver.tar.gz")
+# BYPASS: Mengunduh langsung dari branch 'main' yang paling update, mengabaikan Tag/Release!
+source=("$pkgname-main.tar.gz::https://github.com/LoudLunatics/specter/archive/refs/heads/main.tar.gz")
 
-# Kita lewati checksum dulu untuk memastikan instalasi jalan
 sha256sums=('SKIP')
 
 build() {
-  # Masuk ke folder unduhan GitHub
-  cd "$pkgname-$pkgver"
+  # GitHub menamai folder unduhan branch utama dengan akhiran -main
+  cd "$pkgname-main"
   python -m build --wheel --no-isolation
 }
 
 package() {
-  # Instalasi roda (wheel) Python ke sistem Arch
-  cd "$pkgname-$pkgver"
+  cd "$pkgname-main"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }
