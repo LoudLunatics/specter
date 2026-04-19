@@ -1,6 +1,6 @@
 # Maintainer: Red Team <redteam@localhost>
 pkgname=specter
-pkgver=1.1.1
+pkgver=1.2.0
 pkgrel=1
 pkgdesc="Ghost Network Recon Engine (Standalone Nmap Scanner)"
 arch=('any')
