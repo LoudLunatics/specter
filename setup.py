@@ -1,16 +1,24 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
-    name='specter',          # Berubah jadi specter
-    version='1.2.0',         # Versi baru
-    packages=['specter'],    # Target folder baru
+    name='specter',
+    version='1.2.0',
+    description='Ghost Network Recon Engine (Standalone Nmap Scanner)',
+    author='LoudLunatics',
+    # find_packages() otomatis mencari folder yang punya init.py
+    packages=find_packages(),
+    # Menginstruksikan Python untuk menyertakan file non-python jika ada
+    include_package_data=True,
+    python_requires='>=3.6',
     install_requires=[
-        'python-dotenv==1.0.1',
-        'rich==13.7.1'
+        'python-dotenv',
+        'rich',
+        # nmap tidak perlu ditulis di sini karena diurus oleh pacman (depends)
     ],
     entry_points={
         'console_scripts': [
-            'specter=specter.cli:main',  # Perintah panggilannya sekarang 'specter'
+            # perintah_di_terminal = nama_folder.nama_file:nama_fungsi
+            'specter=specter.cli:main',
         ],
     },
 )
