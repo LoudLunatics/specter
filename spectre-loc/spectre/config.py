@@ -1,25 +1,22 @@
 import os
 from pathlib import Path
 from dotenv import set_key, load_dotenv
-from spectre.ui import console, show_status, show_success
+from specter.ui import console, show_status, show_success
 
-CONFIG_DIR = Path.home() / ".config" / "spectre-loc"
+# Nama folder config yang benar: specter
+CONFIG_DIR = Path.home() / ".config" / "specter"
 ENV_FILE = CONFIG_DIR / ".env"
 
 def setup_config():
-    # Buat folder ~/.config/spectre-loc jika belum ada
+    # Buat folder ~/.config/specter jika belum ada
     if not CONFIG_DIR.exists():
         CONFIG_DIR.mkdir(parents=True)
     
-    # Jika file .env belum ada, minta user masukkan API Key
+    # Buat file .env kosong jika belum ada (untuk fitur masa depan)
     if not ENV_FILE.exists():
-        show_status("First time setup detected. Configuring system...")
-        api_key = console.input("[bold cyan]Enter your Shodan API Key: [/bold cyan]")
         ENV_FILE.touch()
-        set_key(str(ENV_FILE), "SHODAN_API_KEY", api_key)
-        show_success(f"API Key saved securely to {ENV_FILE}")
-        console.print("—" * 62)
+        show_status("Initializing local Specter environment...")
+        show_success(f"Workspace created at {CONFIG_DIR}")
 
-    # Load API Key ke environment
     load_dotenv(ENV_FILE)
-    return os.getenv("SHODAN_API_KEY")
+    return True
