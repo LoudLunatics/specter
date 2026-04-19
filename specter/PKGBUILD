@@ -1,4 +1,4 @@
-# Maintainer: Red Team <redteam@localhost>
+# Maintainer: LoudLunatics <nauvalazfa@proton.me>
 pkgname=specter
 pkgver=1.2.0
 pkgrel=1
@@ -6,23 +6,24 @@ pkgdesc="Ghost Network Recon Engine (Standalone Nmap Scanner)"
 arch=('any')
 url="https://github.com/LoudLunatics/specter"
 license=('MIT')
-depends=('python' 'python-dotenv' 'python-rich' 'nmap')
 
-# Menggunakan standar Arch Linux terbaru (PEP 517)
+depends=('python' 'python-dotenv' 'python-rich' 'nmap')
 makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
 
-# BYPASS: Mengunduh langsung dari branch 'main' yang paling update, mengabaikan Tag/Release!
-source=("$pkgname-main.tar.gz::https://github.com/LoudLunatics/specter/archive/refs/heads/main.tar.gz")
+# --- JALUR BYPASS ANTI 404 ---
+# Mengambil langsung dari branch 'main', masa bodoh dengan Tag versi!
+source=("$pkgname-main.tar.gz::https://github.com/LoudLunatics/$pkgname/archive/refs/heads/main.tar.gz")
 
 sha256sums=('SKIP')
 
 build() {
-  # GitHub menamai folder unduhan branch utama dengan akhiran -main
+  # Masuk ke folder unduhan branch main
   cd "$pkgname-main"
   python -m build --wheel --no-isolation
 }
 
 package() {
+  # Instalasi ke sistem
   cd "$pkgname-main"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }
