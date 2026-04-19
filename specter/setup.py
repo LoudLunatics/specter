@@ -1,16 +1,24 @@
-from setuptools import setup
+# Maintainer: LoudLunatics <nauvalazfa@proton.me>
+pkgname=specter
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="Ghost Network Recon Engine"
+arch=('any')
+url="https://github.com/LoudLunatics/specter"
+license=('MIT')
+depends=('python' 'python-dotenv' 'python-rich' 'nmap')
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
 
-setup(
-    name='specter',          # Berubah jadi specter
-    version='1.2.0',         # Versi baru
-    packages=['specter'],    # Target folder baru
-    install_requires=[
-        'python-dotenv==1.0.1',
-        'rich==13.7.1'
-    ],
-    entry_points={
-        'console_scripts': [
-            'specter=specter.cli:main',  # Perintah panggilannya sekarang 'specter'
-        ],
-    },
-)
+source=("$pkgname-main.tar.gz::https://github.com/LoudLunatics/$pkgname/archive/refs/heads/main.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+  cd "$pkgname-main"
+  # Pastikan kita membangun dari folder yang ada setup.py nya
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$pkgname-main"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
