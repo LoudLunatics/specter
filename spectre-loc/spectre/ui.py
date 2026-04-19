@@ -19,7 +19,7 @@ def show_welcome():
     # Membersihkan layar terminal sebelum mencetak banner
     os.system('clear' if os.name == 'posix' else 'cls')
     console.print(BANNER)
-    console.print("[dim]Version 1.2.2 | Authorized Red Team Access Only[/dim]")
+    console.print("[dim]Version 1.2.0 | Authorized Red Team Access Only[/dim]")
     console.print("[bold red]—[/bold red]" * 70)
 
 def show_status(msg):
