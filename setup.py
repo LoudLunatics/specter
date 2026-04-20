@@ -3,16 +3,16 @@ from setuptools import setup, find_packages
 setup(
     name="specter",
     version="1.2.0",
-    # find_packages otomatis mencari folder 'specter' yang punya __init__.py
-    packages=find_packages(),
+    # Kita tunjuk langsung folder 'specter' sebagai paket utamanya
+    packages=['specter'],
+    package_dir={'': '.'}, 
     include_package_data=True,
     install_requires=[
-        'rich' # shodan dan python-dotenv resmi dihapus!
-        # nmap tidak ditulis di sini karena dia aplikasi sistem, bukan paket Python
+        'rich'
     ],
     entry_points={
         'console_scripts': [
-            # Panggil fungsi main() di cli.py yang ada di dalam folder specter (-ER)
+            # Memanggil fungsi main di specter/cli.py
             'specter=specter.cli:main', 
         ],
     },
