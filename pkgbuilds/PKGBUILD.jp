@@ -1,0 +1,32 @@
+# メンテナ: Red Team <redteam@localhost>
+pkgname=specter
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="Nmapベースのゴーストネットワーク偵察エンジン"
+arch=('any')
+license=('MIT')
+
+# python-shodan は削除されました。Nmap に置き換えられました。
+depends=('python' 'python-rich' 'nmap')
+
+# 最新の Arch Linux 標準 (PEP 517) を使用
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=()
+
+# ローカルビルドのためチェックサムをスキップ
+sha256sums=()
+
+build() {
+  # このPKGBUILDが存在するディレクトリに移動
+  cd "$startdir"
+  # 古いキャッシュをクリーンアップ
+  rm -rf build/ dist/ *.egg-info
+  # .whl (Wheel) ファイルを作成
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$startdir"
+  # .whl ファイルをPacmanシステムにインストール
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}

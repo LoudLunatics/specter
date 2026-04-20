@@ -1,0 +1,32 @@
+# Maintainer: Red Team <redteam@localhost>
+pkgname=specter
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="Mesin Pengintai & Rekonstruksi Jaringan Siluman Berbasis Nmap"
+arch=('any')
+license=('MIT')
+
+# python-shodan DIHAPUS. Resmi diganti dengan aplikasi nmap bawaan Linux!
+depends=('python' 'python-rich' 'nmap')
+
+# Menggunakan standar Arch Linux terbaru (PEP 517)
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=()
+
+# Melewati proses checksum karena ini adalah rakitan lokal
+sha256sums=()
+
+build() {
+  # Masuk ke direktori tempat PKGBUILD ini berada
+  cd "$startdir"
+  # Bersihkan cache lama
+  rm -rf build/ dist/ *.egg-info
+  # Buat file .whl (Wheel)
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$startdir"
+  # Pasang file .whl ke sistem Pacman
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
