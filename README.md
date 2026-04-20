@@ -1,99 +1,110 @@
-# 📡 SPECTER: Ghost Network Recon Engine
+# 📡 SPECTRE-LOC: Geolocation Recon Engine
 
-> **⚠️ ARCH LINUX EXCLUSIVE**
-> *This tool is strictly built and optimized for Arch Linux and its derivatives (EndeavourOS, Manjaro, BlackArch). It leverages native raw socket injection and PEP 517 build standards. Execution on non-Arch systems is explicitly locked and not supported.*
+> ⚠️ ARCH LINUX EXCLUSIVE
+> *This tool is strictly built and optimized for Arch Linux and its derivatives (EndeavourOS, Manjaro, BlackArch). It leverages the pacman package manager and PEP 517 build standards. Execution on Debian, Ubuntu, Windows, or macOS is explicitly locked and not supported.*
 
-**SPECTER** is an advanced, standalone network reconnaissance engine designed to detect exposed infrastructure and IoT devices (such as RTSP streams and IP cameras). By dropping reliance on third-party APIs (like Shodan), SPECTER operates entirely locally, utilizing **Ghost Mode (Stealth SYN Scanning)** to bypass firewalls and minimize footprint on Intrusion Detection Systems (IDS).
+SPECTRE-LOC is an advanced Open-Source Intelligence (OSINT) terminal interface designed to triangulate and map exposed IoT devices (such as IP cameras, RTSP streams, and web servers) within a specific geographic radius using the Shodan API.
 
 ## ⚙️ Tech Stack
-- **Language:** Python 3.12+
-- **Build System:** PEP 517 (python-build, python-installer, wheel)
-- **Primary Engine:** Nmap (Stealth SYN Scanning via subprocess)
-- **UI Framework:** Rich (Tactical Terminal UI)
+- Language: Python 3.12+
+- Build System: PEP 517 (python-build, python-installer, wheel)
+- Core Engine: Shodan API 
+- UI Framework: Rich (Terminal Formatting)
 
 ## 🚀 Key Features
-- **Independent Radar:** No API Keys required. Scans directly from your local machine using raw network sockets.
-- **Ghost Mode (Stealth):** Utilizes Nmap's SYN Scan (`-sS`) and Polite Timing template (`-T2`) to evade ISP monitoring and firewalls.
-- **Tactical UI:** Color-coded, rapid-parsing terminal output using the Rich library, optimized for active operations.
-- **Arch Native:** Fully integrated with `makepkg` and AUR distribution standards.
+- OS-Level Locking: Enforces Arch Linux execution to ensure compatibility with native networking toolchains.
+- Geofencing Triangulation: Pinpoint exposed devices within a 1-20km radius of a specific latitude/longitude.
+- Persistent Configuration: Automatically securely stores API credentials in ~/.config/spectre-loc/ natively conforming to XDG Base Directory Specification.
+- Rich Terminal UI: Tactical, color-coded terminal output using Rich for rapid data parsing during active reconnaissance.
+- Multi-Language Builds: Supports PKGBUILD distribution in multiple localized formats (ID, EN, JP, CN) via the pkgbuilds/ directory.
 
 ---
 
-## 🛠️ Installation (The Arch Way)
+## 🛠 Installation (The Arch Way)
 
-Ensure your system has the base development tools (`base-devel`) and an AUR helper installed. SPECTER requires `nmap` and `python` to function.
+Ensure your system has the base development tools and an AUR helper (like yay) installed.
 
-### 1. Clone the repository
+1. Clone the repository
 ```bash
-git clone [https://github.com/LoudLunatics/specter.git](https://github.com/LoudLunatics/specter.git)
-cd specter
+git clone [https://github.com/yourusername/spectre-loc.git](https://github.com/yourusername/spectre-loc.git)
+cd spectre-loc
 
-2. Build and Install via makepkg
+2. Install external dependencies via AUR
+Bash
 
-Run the following command to automatically resolve dependencies, build the Python package, and install it to your Arch system:
+yay -S --needed python-dotenv python-rich python-shodan
+
+3. Build and Install via makepkg
 Bash
 
 makepkg -si
 
-    💡 Troubleshooting (Validity Check Failed):
-    If you encounter a "One or more files did not pass the validity check!" error during installation, it means the checksums in the PKGBUILD are outdated. Run these commands to fix it:
-    Bash
-
-    rm -rf src/ pkg/ specter-*.tar.gz
-    updpkgsums
-    makepkg --printsrcinfo > .SRCINFO
-    makepkg -si
-
 💻 Usage
 
-Because SPECTER relies on Stealth SYN Scanning—which manipulates raw TCP packets—the engine must be executed with root (sudo) privileges.
+Once installed globally, you can invoke the engine from any directory:
 Bash
 
-sudo specter
+spectre-loc
 
-Modes of Operation
+First-Run Setup
 
-Upon execution, SPECTER will prompt you for two parameters:
-
-    Target IP / Range: You can input a single IP (e.g., 192.168.1.1) or a CIDR subnet (e.g., 103.10.0.0/24).
-
-    Stealth Mode (y/n):
-
-        y (GHOST): Uses slower timing (-T2) to remain undetected. Recommended for public networks.
-
-        n (NORMAL): Uses standard timing (-T3) for much faster execution. Recommended for local/home networks.
-
+On the first execution, SPECTRE-LOC will prompt you for your Shodan API Key. It will be securely stored in ~/.config/spectre-loc/.env and will not be requested again.
 Example Output
 Plaintext
 
-  _____ _____  ______ _____ _______ ______ _____  
- / ____|  __ \|  ____/ ____|__   __|  ____|  __ \ 
-| (___ | |__) | |__ | |       | |  | |__  | |__) |
- \___ \|  ___/|  __|| |       | |  |  __| |  _  / 
- ____) | |    | |___| |____   | |  | |____| | \ \ 
-|_____/|_|    |______\_____|  |_|  |______|_|  \_\
+   _____ ____  _________________  ______       ____  ______
+  / ___//  \/ ____/ ____/_  /  \   / /   /  \/ ____/
+  \ \/ /_/ / __/ / /     / / / /_/ /  / /   / / / / /     
+ ___/ / ____/ /___/ /___  / / / _, _/  / /___/ /_/ / /___   
+/____/_/   /_____/\____/ /_/ /_/ |_|  /_____/\____/\____/   
 
-        >> NETWORK RECONNAISSANCE & INFILTRATION ENGINE <<
-Version 1.2.2 | Authorized Red Team Access Only
-——————————————————————————————————————————————————————————————————————
+        >> GEOLOCATION SURVEILLANCE & RECON ENGINE <<
+Version 1.0.0 | Authorized Red Team Access Only
+——————————————————————————————————————————————————————————————
 
-SPECTER@target_ip/range: 192.168.1.0/24
-SPECTER@stealth_mode(y/n): y
+SPECTRE@lat: -6.2146
+SPECTRE@lon: 106.8451
+SPECTRE@rad(km): 15
 
-[*] Scanning target 192.168.1.0/24 in GHOST mode...
-⠧ Infiltrating network...
+[*] Scanning radius 15km from -6.2146, 106.8451...
+⠧ Triangulating signals...
 
-TARGETS ACQUIRED (3 found)
+TARGETS ACQUIRED (5 found)
 ┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━┓
 ┃ IP Address      ┃ Organization              ┃ Port ┃
 ┡━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━┩
-│ 192.168.1.1     │ Gateway/Router            │  554 │
-│ 192.168.1.15    │ Infiltrated Host          │  554 │
-│ 192.168.1.22    │ Infiltrated Host          │  554 │
+│ 103.144.xxx.xx  │ PT. Telkom Indonesia      │  554 │
+│ 114.122.xxx.xx  │ Biznet Networks           │  554 │
+│ 36.68.xxx.xx    │ PT. Supra Primatama       │  554 │
+│ 180.250.xxx.xx  │ MyRepublic Broadband      │ 8080 │
+│ 202.169.xxx.xx  │ PT. Indosat Tbk           │   80 │
 └─────────────────┴───────────────────────────┴──────┘
 
 [+] Reconnaissance complete.
 
-🛡️ Disclaimer
+🌍 Localization (Multi-Language Builds)
+
+SPECTRE-LOC supports localized Arch Linux package descriptions for international Red Team operators. The default PKGBUILD is in English, but localized versions are available in the pkgbuilds/ directory.
+
+Supported languages:
+
+    ID : Indonesian (Bahasa Indonesia)
+
+    JP : Japanese (日本語)
+
+    CN : Chinese (中文)
+
+How to build with a localized package description:
+If you want to install SPECTRE-LOC using the Japanese package description, simply overwrite the default PKGBUILD before compiling:
+Bash
+
+# 1. Copy the desired language PKGBUILD to the root directory
+cp pkgbuilds/PKGBUILD.jp PKGBUILD
+
+# 2. Build and install as usual
+makepkg -si
+
+Note: The core CLI engine will remain in English to maintain syntax consistency across global environments.
+🛡 Disclaimer
 
 This project is developed strictly for educational purposes and ethical security research. The developers assume no liability and are not responsible for any misuse or damage caused by this program. Always adhere to local cybersecurity laws and obtain proper authorization before scanning networks you do not own.
