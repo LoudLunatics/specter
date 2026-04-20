@@ -1,0 +1,28 @@
+# メンテナ: Red Team <redteam@localhost>
+pkgname=spectre-loc
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Shodanベースのジオロケーション監視および偵察エンジン"
+arch=('any')
+license=('MIT')
+depends=('python' 'python-dotenv' 'python-rich' 'python-shodan')
+
+# 最新のArch Linux標準（PEP 517）を使用
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=()
+
+# ローカルビルドのためチェックサムプロセスをスキップ
+sha256sums=()
+
+build() {
+  # このPKGBUILDがあるディレクトリに移動
+  cd "$startdir"
+  # .whl（Wheel）ファイルを作成
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$startdir"
+  # .whlファイルをPacmanシステムにインストール
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
