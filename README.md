@@ -25,8 +25,9 @@
 
 Ensure your system has the base development tools and an AUR helper (like `yay`) installed.
 
-1. **Clone the repository**
 ```bash
+1. **Clone the repository**
+
 git clone [https://github.com/yourusername/specter.git](https://github.com/yourusername/specter.git)
 cd specter
 
